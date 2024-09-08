@@ -65,4 +65,4 @@ if uploaded_file is not None:
             st.markdown("<h1 style='text-align: center; color: red;'>NOT SAFE</h1>", unsafe_allow_html=True)
             hours_needed = int(results['total_hours_required']-results['total_hours_worked'])
             minutes_needed = int(((results['total_hours_required']-results['total_hours_worked']) - hours_needed ) * 60)
-            st.write(f"***Number of hours and minutes left:*** {hours_needed:02}:{minutes_needed:02}")
+            st.write(f"***Hours and minutes left:*** {hours_needed:02}:{minutes_needed:02}")
