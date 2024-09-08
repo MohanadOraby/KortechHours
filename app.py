@@ -22,6 +22,7 @@ def preprocess_file(file_path):
   total_seconds = df['Hours_worked'].sum().total_seconds()
   Hours = int(total_seconds // (60*60))
   Minutes = int(total_seconds % (60*60) // 60)
+  days_worked = df.shape[0]
 
   # Print
   return {
