@@ -57,7 +57,7 @@ if uploaded_file is not None:
         st.write(f"**Number of days worked:** {results['days_worked']}")
         avg_hour = int(results['total_hours_worked'] / results['days_worked'])
         avg_min = int((results['total_hours_worked'] / results['days_worked'] ) - avg_hour ) * 60
-        st.write(f"**Average hours worked:** {avg_hour}:{avg_min:02}"
+        st.write(f"**Average hours worked:** {avg_hour}:{avg_min:02}")
 
         # Compare hours worked and hours required
         if results['total_hours_worked'] >= results['total_hours_required']:
