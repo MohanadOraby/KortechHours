@@ -82,7 +82,7 @@ uploaded_file = st.file_uploader("Choose an Excel file", type=["xlsx"])
 
 if uploaded_file is not None:
     if st.button("Process File"):
-        results = preprocess_file(uploaded_file)
+        results = preprocess_file_calculation(uploaded_file)
 
         # Display the results using st.write()
         st.subheader("Results:")
