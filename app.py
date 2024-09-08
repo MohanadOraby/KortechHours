@@ -95,10 +95,6 @@ if uploaded_file is not None:
             # Display "YOU ARE SAFE" in green
             st.markdown("<h1 style='text-align: center; color: green;'>SAFE</h1>", unsafe_allow_html=True)
 
-            df_merged = preprocess_table_display(uploaded_file)
-            st.subheader("Work Hours Table")
-            st.dataframe(df_merged)
-        
         else:
             # Display "NOT SAFE" in red and calculate how much is left.
             st.markdown("<h1 style='text-align: center; color: red;'>NOT SAFE</h1>", unsafe_allow_html=True)
@@ -107,8 +103,22 @@ if uploaded_file is not None:
             st.write(f"***Hours and minutes left:*** {hours_needed:02}:{minutes_needed:02}")
 
           
-            df_merged = preprocess_table_display(uploaded_file)
-            st.subheader("Work Hours Table")
-            st.dataframe(df_merged)
+    df_merged = preprocess_table_display(uploaded_file)
+    st.subheader("Work Hours Table")
+    st.table(df_merged)
+
+    df_merged = preprocess_table_display(uploaded_file)
+    st.markdown(
+      """
+      <style>
+      .streamlit-table {
+          width: 1000px;  /* Adjust the width as needed */
+      }
+      </style>
+      """,
+      unsafe_allow_html=True
+    )
+    st.subheader("Work Hours Table")
+    st.table(df_merged)
     
 
