@@ -60,12 +60,14 @@ def preprocess_table_display(file_path):
   df['Out'] = df['Out'].dt.time
 
   df['Date'] = pd.to_datetime(df['Date'], dayfirst=True, errors='coerce')
-  df_orig['Date'] = pd.to_datetime(df_orig['Date'], dayfirst=True, errors='coerce')
+  ## df_orig['Date'] = pd.to_datetime(df_orig['Date'], dayfirst=True, errors='coerce')
 
   # Fixing day name
   df_orig['Day'] = pd.to_datetime(df_orig['Date']).dt.day_name()
 
   df_merged = pd.merge(df_orig, df[['Date','Hours_worked']], on='Date', how='left')
+
+  df_merged.drop(columns =['Requested','Deduction','Request'] , inplace=True)
 
   return df_merged
 
