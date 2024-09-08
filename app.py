@@ -59,7 +59,10 @@ if uploaded_file is not None:
         # Compare hours worked and hours required
         if results['total_hours_worked'] >= results['total_hours_required']:
             # Display "YOU ARE SAFE" in green
-            st.markdown("<h1 style='text-align: center; color: green;'>YOU ARE SAFE</h1>", unsafe_allow_html=True)
+            st.markdown("<h1 style='text-align: center; color: green;'>SAFE</h1>", unsafe_allow_html=True)
         else:
-            # Display "NOT SAFE" in red
+            # Display "NOT SAFE" in red and calculate how much is left.
             st.markdown("<h1 style='text-align: center; color: red;'>NOT SAFE</h1>", unsafe_allow_html=True)
+            hours_needed = int(total_hours_required-total_hours_worked)
+            minutes_needed = ((total_hours_required-total_hours_worked) - hours_needed ) * 60
+            st.write(f"***Number of hours and minutes left:*** {hours_needed:02}:{minutes_needed:02}")
