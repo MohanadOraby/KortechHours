@@ -25,9 +25,9 @@ def preprocess_file(file_path):
 
   # Print
   return {
-  print(f"Hours Required: {int(df.shape[0]*8.5)}:{int((df.shape[0]*8.5*60 ) % 60):02}"),
-  print(f"Hours Worked: {Hours}:{Minutes:02}"),
-  print(f"Days Worked: {df.shape[0]}")
+      "hours_required": f"{hours_required}:{minutes_required:02}",
+      "hours_worked": f"{Hours}:{Minutes:02}",
+      "days_worked": days_worked
   }
 
 
