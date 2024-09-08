@@ -44,3 +44,9 @@ uploaded_file = st.file_uploader("Choose an Excel file", type=["xlsx"])
 if uploaded_file is not None:
     if st.button("Process File"):
         results = preprocess_file(uploaded_file)
+
+        # Display the results using st.write()
+        st.subheader("Results:")
+        st.write(f"**Number of hours required:** {results['hours_required']}")
+        st.write(f"**Number of hours worked:** {results['hours_worked']}")
+        st.write(f"**Number of days worked:** {results['days_worked']}")
