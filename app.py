@@ -94,13 +94,21 @@ if uploaded_file is not None:
         if results['total_hours_worked'] >= results['total_hours_required']:
             # Display "YOU ARE SAFE" in green
             st.markdown("<h1 style='text-align: center; color: green;'>SAFE</h1>", unsafe_allow_html=True)
+
+            df_merged = preprocess_table_display(uploaded_file)
+            st.subheader("Work Hours Table")
+            st.dataframe(df_merged)
+        
         else:
             # Display "NOT SAFE" in red and calculate how much is left.
             st.markdown("<h1 style='text-align: center; color: red;'>NOT SAFE</h1>", unsafe_allow_html=True)
             hours_needed = int(results['total_hours_required']-results['total_hours_worked'])
             minutes_needed = int(((results['total_hours_required']-results['total_hours_worked']) - hours_needed ) * 60)
             st.write(f"***Hours and minutes left:*** {hours_needed:02}:{minutes_needed:02}")
+
+          
+            df_merged = preprocess_table_display(uploaded_file)
+            st.subheader("Work Hours Table")
+            st.dataframe(df_merged)
     
-    df_merged = preprocess_table_display(uploaded_file)
-    st.subheader("Work Hours Table")
-    st.dataframe(df_merged)
+
