@@ -30,6 +30,8 @@ def preprocess_file(file_path):
   return {
       "hours_required": f"{RHours}:{RMinutes:02}",
       "hours_worked": f"{WHours}:{WMinutes:02}",
+      "total_hours_worked": WHours + WMinutes / 60,  # For comparison, will not be displayed
+      "total_hours_required": RHours + RMinutes / 60, # For comparison, will not be displayed
       "days_worked": days_worked
   }
 
@@ -53,3 +55,11 @@ if uploaded_file is not None:
         st.write(f"**Number of hours required:** {results['hours_required']}")
         st.write(f"**Number of hours worked:** {results['hours_worked']}")
         st.write(f"**Number of days worked:** {results['days_worked']}")
+
+        # Compare hours worked and hours required
+        if results['total_hours_worked'] >= results['total_hours_required']:
+            # Display "YOU ARE SAFE" in green
+            st.markdown("<h1 style='text-align: center; color: green;'>YOU ARE SAFE</h1>", unsafe_allow_html=True)
+        else:
+            # Display "NOT SAFE" in red
+            st.markdown("<h1 style='text-align: center; color: red;'>NOT SAFE</h1>", unsafe_allow_html=True)
