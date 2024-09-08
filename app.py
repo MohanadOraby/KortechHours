@@ -64,7 +64,7 @@ def preprocess_table_display(file_path):
   df_orig['Day'] = pd.to_datetime(df_orig['Date']).dt.day_name()
   df['Day'] = pd.to_datetime(df['Date']).dt.day_name()
 
-  df_merged = pd.merge(df_orig, df[['Date','Hours_worked','Day']], on='Date', how='left')
+  df_merged = pd.merge(df_orig, df[['Date','Hours_worked','Day']], on=['Date','Day'], how='left')
 
   df_merged.drop(columns =['Requested','Deduction','Request'] , inplace=True)
 
