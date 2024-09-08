@@ -74,7 +74,7 @@ def preprocess_table_display(file_path):
 # Streamlit App
 st.set_page_config(page_title="Work Hours Tracker", page_icon="🕒")  # Set the page title and icon
 st.title("KORTECH Work Hours Tracker")  # Main title on the app
-st.subtitle("PLEASE MAKE SURE ALL 'IN' AND 'OUT' COLUMNS ARE FILLED WITH VALUES FOR ACCURATE RESULTS")
+st.subheader("PLEASE MAKE SURE ALL 'IN' AND 'OUT' COLUMNS ARE FILLED WITH VALUES FOR ACCURATE RESULTS")
 
 # Adding a prompt for users to upload the Excel file
 st.write("Please upload your Excel file to calculate work hours.")
