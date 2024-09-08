@@ -42,8 +42,7 @@ def preprocess_table_display(file_path):
   # Some cleaning
   df = df_orig.drop(columns=['Day','Requested','Deduction','Request'])
   df = df.dropna(subset=['In','Out'], how='all')
-  df['Date'] = pd.to_datetime(df['Date'], dayfirst=True, errors='coerce')
-  df['Date'] = df['Date'].dt.strftime('%d/%m/%Y')
+  df['Date'] = pd.to_datetime(df['Date'], dayfirst=True, errors='coerce').dt.strftime('%Y-%m-%d')
 
   # Fixing columns "In" and "Out" and changing it to datetime
   df['In'] = pd.to_datetime(df['In'], format='%I:%M%p')
@@ -59,8 +58,7 @@ def preprocess_table_display(file_path):
   df['In'] = df['In'].dt.time
   df['Out'] = df['Out'].dt.time
 
-  df['Date'] = pd.to_datetime(df['Date'], dayfirst=True, errors='coerce')
-  ## df_orig['Date'] = pd.to_datetime(df_orig['Date'], dayfirst=True, errors='coerce')
+  df_orig['Date'] = pd.to_datetime(df['Date'], dayfirst=True, errors='coerce').dt.strftime('%Y-%m-%d')
 
   # Fixing day name
   df_orig['Day'] = pd.to_datetime(df_orig['Date']).dt.day_name()
