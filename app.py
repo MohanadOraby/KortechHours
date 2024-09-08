@@ -101,5 +101,5 @@ if uploaded_file is not None:
             minutes_needed = int(((results['total_hours_required']-results['total_hours_worked']) - hours_needed ) * 60)
             st.write(f"***Hours and minutes left:*** {hours_needed:02}:{minutes_needed:02}")
 
-      st.subheader("Work Hours Table")
-      st.dataframe(df_merged)
+    st.subheader("Work Hours Table")
+    st.dataframe(df_merged)
