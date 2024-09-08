@@ -90,25 +90,29 @@ if uploaded_file is not None:
         st.write(f"**Number of hours required:** {results['hours_required']}")
         st.write(f"**Number of hours worked:** {results['hours_worked']}")
         st.write(f"**Number of days worked:** {results['days_worked']}")
+        avg_hour = int(results['total_hours_worked'] / results['days_worked'])
+        avg_min = int(((results['total_hours_worked'] / results['days_worked']) - avg_hour) * 60)
+        st.write(f"**Average hours worked per day:** {avg_hour}:{avg_min:02}")
 
-        df_merged = preprocess_table_display(uploaded_file)
-        st.markdown(
-          """
-          <style>
-          .streamlit-table {
-              width: 1000px;  /* Adjust the width as needed */
-          }
-          </style>
-          """,
-          unsafe_allow_html=True
-        )
-        st.subheader("Work Hours Table")
-        st.table(df_merged)  
+
 
         # Compare hours worked and hours required
         if results['total_hours_worked'] >= results['total_hours_required']:
             # Display "YOU ARE SAFE" in green
             st.markdown("<h1 style='text-align: center; color: green;'>SAFE</h1>", unsafe_allow_html=True)
+            df_merged = preprocess_table_display(uploaded_file)
+            st.markdown(
+            """
+            <style>
+            .streamlit-table {
+                width: 1000px;  /* Adjust the width as needed */
+            }
+            </style>
+            """,
+            unsafe_allow_html=True)
+          
+            st.subheader("Work Hours Table")
+            st.table(df_merged)  
 
         else:
             # Display "NOT SAFE" in red and calculate how much is left.
@@ -116,6 +120,19 @@ if uploaded_file is not None:
             hours_needed = int(results['total_hours_required']-results['total_hours_worked'])
             minutes_needed = int(((results['total_hours_required']-results['total_hours_worked']) - hours_needed ) * 60)
             st.write(f"***Hours and minutes left:*** {hours_needed:02}:{minutes_needed:02}")
+            st.markdown(
+            """
+            <style>
+            .streamlit-table {
+                width: 1000px;  /* Adjust the width as needed */
+            }
+            </style>
+            """,
+            unsafe_allow_html=True)
+          
+            st.subheader("Work Hours Table")
+            st.table(df_merged)  
+          
 
 
 
