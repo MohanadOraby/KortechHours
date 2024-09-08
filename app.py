@@ -20,14 +20,16 @@ def preprocess_file(file_path):
   # Calculating hours worked and hours required
   df['Hours_worked'] = (df['Out'] - df['In'])
   total_seconds = df['Hours_worked'].sum().total_seconds()
-  Hours = int(total_seconds // (60*60))
-  Minutes = int(total_seconds % (60*60) // 60)
+  WHours = int(total_seconds // (60*60))
+  WMinutes = int(total_seconds % (60*60) // 60)
+  RHours = int(df.shape[0]*8.5)
+  RMinutes = int((df.shape[0]*8.5*60 ) % 60)
   days_worked = df.shape[0]
 
   # Print
   return {
-      "hours_required": f"{hours_required}:{minutes_required:02}",
-      "hours_worked": f"{Hours}:{Minutes:02}",
+      "hours required: f"{RHours}:{RMinutes:02}",
+      "hours_worked": f"{WHours}:{WMinutes:02}",
       "days_worked": days_worked
   }
 
