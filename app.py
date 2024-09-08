@@ -42,4 +42,5 @@ st.write("Please upload your Excel file to calculate work hours.")
 uploaded_file = st.file_uploader("Choose an Excel file", type=["xlsx"])
 
 if uploaded_file is not None:
-    results = preprocess_file(uploaded_file)
+    if st.button("Process File"):
+        results = preprocess_file(uploaded_file)
