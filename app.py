@@ -28,7 +28,7 @@ def preprocess_file(file_path):
 
   # Print
   return {
-      "hours required: f"{RHours}:{RMinutes:02}",
+      "hours required": f"{RHours}:{RMinutes:02}",
       "hours_worked": f"{WHours}:{WMinutes:02}",
       "days_worked": days_worked
   }
