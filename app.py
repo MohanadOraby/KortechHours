@@ -82,6 +82,7 @@ uploaded_file = st.file_uploader("Choose an Excel file", type=["xlsx"])
 
 if uploaded_file is not None:
     if st.button("Process File"):
+
         results = preprocess_file_calculation(uploaded_file)
 
         # Display the results using st.write()
@@ -89,6 +90,20 @@ if uploaded_file is not None:
         st.write(f"**Number of hours required:** {results['hours_required']}")
         st.write(f"**Number of hours worked:** {results['hours_worked']}")
         st.write(f"**Number of days worked:** {results['days_worked']}")
+
+        df_merged = preprocess_table_display(uploaded_file)
+        st.markdown(
+          """
+          <style>
+          .streamlit-table {
+              width: 1000px;  /* Adjust the width as needed */
+          }
+          </style>
+          """,
+          unsafe_allow_html=True
+        )
+        st.subheader("Work Hours Table")
+        st.table(df_merged)  
 
         # Compare hours worked and hours required
         if results['total_hours_worked'] >= results['total_hours_required']:
@@ -103,18 +118,5 @@ if uploaded_file is not None:
             st.write(f"***Hours and minutes left:*** {hours_needed:02}:{minutes_needed:02}")
 
 
-    df_merged = preprocess_table_display(uploaded_file)
-    st.markdown(
-      """
-      <style>
-      .streamlit-table {
-          width: 1000px;  /* Adjust the width as needed */
-      }
-      </style>
-      """,
-      unsafe_allow_html=True
-    )
-    st.subheader("Work Hours Table")
-    st.table(df_merged)
-    
+
 
