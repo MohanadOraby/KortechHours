@@ -142,7 +142,8 @@ if uploaded_file is not None:
               
             else:
                 # In the case the last day shown is on the 15th.
-                st.write("***Unable to calculate time per day due to insufficient working days remaining***")
+                st.markdown(f"<p style='text-align: center; font-size: 16px;'>Unable to calculate time per day due to insufficient working days remaining</p>", unsafe_allow_html=True)
+
 
 
 
