@@ -122,18 +122,23 @@ if uploaded_file is not None:
         if results['total_hours_worked'] >= results['total_hours_required']:
             # Display "FULFILLED" in green
             st.markdown("<h1 style='text-align: center; color: green;'>FULFILLED</h1>", unsafe_allow_html=True)
-          
-            hours_completed = int(results['total_hours_worked']-results['total_hours_required'])
-            minutes_completed = int(((results['total_hours_worked']-results['total_hours_required']) - hours_completed ) * 60)
-          
+
+            extra_hours_completed = int(results['total_hours_worked']-results['total_hours_required'])
+            extra_minutes_completed = int(((results['total_hours_worked']-results['total_hours_required']) - extra_hours_completed ) * 60)
+            # Display extra time fulfilled
+            st.write(f"***Extra time fulfilled:*** {extra_hours_completed:02}:{extra_minutes_completed:02}")
+
+            
             if results["days_until_15th"] > 0:
               
-                hours_and_minutes_fulfilled = (hours_completed*3600 + minutes_completed*60 ) / results["days_until_15th"]
+                hours_and_minutes_fulfilled = (extra_hours_completed*3600 + extra_minutes_completed*60 ) / results["days_until_15th"]
                 hours_fulfilled = int(hours_and_minutes_fulfilled // 3600)
                 minutes_fulfilled = int((hours_and_minutes_fulfilled % 3600) // 60)
+                # Display extra time fulfilled per day
                 st.write(f"***Extra time fulfilled per day:*** {hours_fulfilled:02}:{minutes_fulfilled:02}")
               
             else:
+                # In the case the last day shown is on the 15th.
                 st.write("***Unable to calculate time per day due to insufficient working days remaining***")
 
 
