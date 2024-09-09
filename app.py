@@ -135,7 +135,7 @@ if uploaded_file is not None:
                 hours_fulfilled = int(hours_and_minutes_fulfilled // 3600)
                 minutes_fulfilled = int((hours_and_minutes_fulfilled % 3600) // 60)
                 # Display extra time fulfilled per day
-                st.write(f"***Time you can reduce per day and still meet goal:*** {hours_fulfilled:02}:{minutes_fulfilled:02} ***")
+                st.write(f"***Time you can reduce per day and still meet goal:*** {hours_fulfilled:02}:{minutes_fulfilled:02}")
 
               
             else:
