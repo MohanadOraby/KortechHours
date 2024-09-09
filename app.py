@@ -25,6 +25,25 @@ def preprocess_file_calculation(file_path):
   RHours = int(df.shape[0]*8.5)
   RMinutes = int((df.shape[0]*8.5*60 ) % 60)
   days_worked = df.shape[0]
+  # df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
+  last_date = pd.to_datetime(df['Date']).iloc[-1]
+
+  if last_date.day <= 15:
+    target_date = last_date.replace(day=15)
+  else:
+    if last_date.month == 12:
+      target_date = last_date.replace(year = last_date.year + 1, month = 1, day = 15)
+    else:
+      target_date = last_date.replace(month = last_date.month + 1, day = 15)
+
+  # Date range (including weekends)
+  date_range = pd.date_range(start=last_date + timedelta(days=1), end=target_date)
+
+  # Exclude weekends (Friday and Saturday)
+
+  working_days = [d for d in date_range if d.weekday() not in  [4,5]] #4 is Friday and 5 is Satuday
+
+  days_until_15th = len(working_days)
 
   # Print
   return {
@@ -32,7 +51,8 @@ def preprocess_file_calculation(file_path):
       "hours_worked": f"{WHours}:{WMinutes:02}",
       "total_hours_worked": WHours + WMinutes / 60,  # For comparison, will not be displayed
       "total_hours_required": RHours + RMinutes / 60, # For comparison, will not be displayed
-      "days_worked": days_worked
+      "days_worked": days_worked,
+      "days_until_15th" : days_until_15th
   }
 
 def preprocess_table_display(file_path):
@@ -74,10 +94,10 @@ def preprocess_table_display(file_path):
 # Streamlit App
 st.set_page_config(page_title="Work Hours Tracker", page_icon="🕒")  # Set the page title and icon
 st.title("KORTECH Work Hours Tracker")  # Main title on the app
-st.subheader("PLEASE MAKE SURE ALL 'IN' AND 'OUT' COLUMNS ARE FILLED WITH VALUES FOR ACCURATE RESULTS")
+
 
 # Adding a prompt for users to upload the Excel file
-st.write("Please upload your Excel file to calculate work hours.")
+st.write("PLEASE MAKE SURE ALL 'IN' AND 'OUT' COLUMNS ARE FILLED WITH VALUES FOR ACCURATE RESULTS")
 
 # File uploader prompt
 uploaded_file = st.file_uploader("Choose an Excel file", type=["xlsx"])
@@ -100,8 +120,25 @@ if uploaded_file is not None:
 
         # Compare hours worked and hours required
         if results['total_hours_worked'] >= results['total_hours_required']:
-            # Display "YOU ARE SAFE" in green
-            st.markdown("<h1 style='text-align: center; color: green;'>SAFE</h1>", unsafe_allow_html=True)
+            # Display "FULFILLED" in green
+            st.markdown("<h1 style='text-align: center; color: green;'>FULFILLED</h1>", unsafe_allow_html=True)
+          
+            hours_fulfilled = int(results['total_hours_worked']-results['total_hours_required'])
+            minutes_fulfilled = int(((results['total_hours_worked']-results['total_hours_required']) - hours_fulfilled ) * 60)
+          
+            if results["days_until_15th"] > 0:
+              
+                hours_and_minutes_fulfilled = (hours_fulfilled*3600 + minutes_fulfilled*60 ) / results["days_until_15th"]
+                hours_fulfilled = hours_and_minutes_fulfilled // 3600
+                minutes_fulfilled = (hours_and_minutes_fulfilled % 3600) // 60
+                st.write(f"***Extra time fulfilled per day:*** {hours_fulfilled:02}:{minutes_fulfilled:02}")
+              
+            else:
+                st.write("***Unable to calculate time per day due to insufficient working days remaining***")
+
+
+
+          
             df_merged = preprocess_table_display(uploaded_file)
             st.markdown(
             """
@@ -117,12 +154,27 @@ if uploaded_file is not None:
             st.table(df_merged)  
 
         else:
-            # Display "NOT SAFE" in red and calculate how much is left.
-            st.markdown("<h1 style='text-align: center; color: red;'>NOT SAFE</h1>", unsafe_allow_html=True)
+            # Display "NOT FULFILLED" in red and calculate how much is left.
+            st.markdown("<h1 style='text-align: center; color: red;'>NOT FULFILLED</h1>", unsafe_allow_html=True)
             hours_needed = int(results['total_hours_required']-results['total_hours_worked'])
             minutes_needed = int(((results['total_hours_required']-results['total_hours_worked']) - hours_needed ) * 60)
-            df_merged = preprocess_table_display(uploaded_file)
             st.write(f"***Hours and minutes left:*** {hours_needed:02}:{minutes_needed:02}")
+
+
+            if results["days_until_15th"] > 0:
+              
+                hours_and_minutes_to_complete = (hours_needed*3600 + minutes_needed*60 ) / results["days_until_15th"]
+                hours_to_complete = hours_and_minutes_to_complete // 3600
+                minutes_to_complete = (hours_and_minutes_to_complete % 3600) // 60
+                st.write(f"***Time required per day to fulfill goal:*** {hours_to_complete:02}:{minutes_to_complete:02}")
+              
+            else:
+                st.write("***Unable to calculate time per day due to insufficient working days remaining***")
+
+
+            
+            df_merged = preprocess_table_display(uploaded_file)
+            
             st.markdown(
             """
             <style>
