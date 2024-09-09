@@ -10,7 +10,7 @@ def preprocess_file_calculation(file_path):
   # Some cleaning
   df = df.drop(columns=['Day','Requested','Deduction','Request'])
   df = df.dropna(subset=['In','Out'], how='all')
-  df['Date'] = pd.to_datetime(df['Date'], dayfirst=True, errors='coerce')
+  df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
   df['Date'] = df['Date'].dt.strftime('%d/%m/%Y')
 
   # Fixing columns "In" and "Out" and changing it to datetime
@@ -62,7 +62,7 @@ def preprocess_table_display(file_path):
   # Some cleaning
   df = df_orig.drop(columns=['Day','Requested','Deduction','Request'])
   df = df.dropna(subset=['In','Out'], how='all')
-  df['Date'] = pd.to_datetime(df['Date'], dayfirst=True, errors='coerce').dt.strftime('%Y-%m-%d')
+  df['Date'] = pd.to_datetime(df['Date'], errors='coerce').dt.strftime('%Y-%m-%d')
 
   # Fixing columns "In" and "Out" and changing it to datetime
   df['In'] = pd.to_datetime(df['In'], format='%I:%M%p')
@@ -78,7 +78,7 @@ def preprocess_table_display(file_path):
   df['In'] = df['In'].dt.time
   df['Out'] = df['Out'].dt.time
 
-  df_orig['Date'] = pd.to_datetime(df['Date'], dayfirst=True, errors='coerce').dt.strftime('%Y-%m-%d')
+  df_orig['Date'] = pd.to_datetime(df['Date'], errors='coerce').dt.strftime('%Y-%m-%d')
 
   # Fixing day name
   df_orig['Day'] = pd.to_datetime(df_orig['Date']).dt.day_name()
@@ -120,13 +120,14 @@ if uploaded_file is not None:
 
         # Compare hours worked and hours required
         if results['total_hours_worked'] >= results['total_hours_required']:
-            # Display "FULFILLED" in green
+            # Display "SAFE" in green
             st.markdown("<h1 style='text-align: center; color: green;'>SAFE</h1>", unsafe_allow_html=True)
 
             extra_hours_completed = int(results['total_hours_worked']-results['total_hours_required'])
             extra_minutes_completed = int(((results['total_hours_worked']-results['total_hours_required']) - extra_hours_completed ) * 60)
             # Display extra time fulfilled
-            st.write(f"***Overworked:*** {extra_hours_completed:02} hours and {extra_minutes_completed:02} minutes")
+            st.markdown("<h1 style='text-align: center; color: white;'>Overworked</h1>", unsafe_allow_html=True)
+            st.markdown(f"<p style='text-align: center; font-size: 16px;'>{extra_hours_completed:02} hours and {extra_minutes_completed:02} minutes</p>", unsafe_allow_html=True)
 
             
             if results["days_until_15th"] > 0:
@@ -161,11 +162,12 @@ if uploaded_file is not None:
             st.table(df_merged)  
 
         else:
-            # Display "NOT FULFILLED" in red and calculate how much is left.
+            # Display "NOT SAFE" in red and calculate how much is left.
             st.markdown("<h1 style='text-align: center; color: red;'>NOT SAFE</h1>", unsafe_allow_html=True)
             hours_needed = int(results['total_hours_required']-results['total_hours_worked'])
             minutes_needed = int(((results['total_hours_required']-results['total_hours_worked']) - hours_needed ) * 60)
-            st.write(f"**Total time required to fulfill goal:** {hours_needed:02} hours and {minutes_needed:02} minutes")
+            st.markdown("<p style='text-align: center; color: white;'>Total time to fulfill goal</p>", unsafe_allow_html=True)
+            st.markdown(f"<p style='text-align: center; font-size: 16px;'>{hours_needed:02} hours and {minutes_needed:02} minutes</p>", unsafe_allow_html=True)
 
 
             if results["days_until_15th"] > 0:
