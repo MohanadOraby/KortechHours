@@ -93,7 +93,8 @@ def preprocess_table_display(file_path):
 
 # Streamlit App
 st.set_page_config(page_title="Work Hours Tracker", page_icon="🕒")  # Set the page title and icon
-st.title("KORTECH Work Hours Tracker")  # Main title on the app
+st.markdown("<h1 style='text-align: center;'>KORTECH Work Hours Tracker</h1>", unsafe_allow_html=True) #main title centered
+
 
 
 # Adding a prompt for users to upload the Excel file
