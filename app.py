@@ -126,7 +126,7 @@ if uploaded_file is not None:
             extra_hours_completed = int(results['total_hours_worked']-results['total_hours_required'])
             extra_minutes_completed = int(((results['total_hours_worked']-results['total_hours_required']) - extra_hours_completed ) * 60)
             # Display extra time fulfilled
-            st.markdown("<h1 style='text-align: center; color: white;'>Overworked</h1>", unsafe_allow_html=True)
+            st.markdown("<p style='text-align: center; font-size: 16px;'>Overworked</p>", unsafe_allow_html=True)
             st.markdown(f"<p style='text-align: center; font-size: 16px;'>{extra_hours_completed:02} hours and {extra_minutes_completed:02} minutes</p>", unsafe_allow_html=True)
 
             
@@ -166,7 +166,7 @@ if uploaded_file is not None:
             st.markdown("<h1 style='text-align: center; color: red;'>NOT SAFE</h1>", unsafe_allow_html=True)
             hours_needed = int(results['total_hours_required']-results['total_hours_worked'])
             minutes_needed = int(((results['total_hours_required']-results['total_hours_worked']) - hours_needed ) * 60)
-            st.markdown("<p style='text-align: center; color: white;'>Total time to fulfill goal</p>", unsafe_allow_html=True)
+            st.markdown("<p style='text-align: center; font-size: 16px'>Total time to fulfill goal</p>", unsafe_allow_html=True)
             st.markdown(f"<p style='text-align: center; font-size: 16px;'>{hours_needed:02} hours and {minutes_needed:02} minutes</p>", unsafe_allow_html=True)
 
 
@@ -175,11 +175,9 @@ if uploaded_file is not None:
                 hours_and_minutes_to_complete = (hours_needed*3600 + minutes_needed*60 ) / results["days_until_15th"]
                 hours_to_complete = int(hours_and_minutes_to_complete // 3600)
                 minutes_to_complete = int((hours_and_minutes_to_complete % 3600) // 60)
-                st.write(f"**EXTRA Time** _required per day for the next {results["days_until_15th"]} working days_ **(until the 15th)** to fulfill goal:")
+                st.markdown(f"<p style='text-align: center; font-size: 16px;'>EXTRA time <strong>required per day for the next {results['days_until_15th']} working days</strong> (until the 15th) to fulfill goal:</p>", unsafe_allow_html=True)
                 st.markdown(f"<p style='text-align: center; font-size: 16px;'>{hours_to_complete:02} hours and {minutes_to_complete:02} minutes</p>", unsafe_allow_html=True)
 
-
-              
             else:
                 st.write("***Unable to calculate time per day due to insufficient working days remaining***")
 
