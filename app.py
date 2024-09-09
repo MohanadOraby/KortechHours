@@ -179,7 +179,7 @@ if uploaded_file is not None:
                 st.markdown(f"<p style='text-align: center; font-size: 16px;'>{hours_to_complete:02} hours and {minutes_to_complete:02} minutes</p>", unsafe_allow_html=True)
 
             else:
-                st.write("***Unable to calculate time per day due to insufficient working days remaining***")
+                st.markdown(f"<p style='text-align: center; font-size: 16px;'>Unable to calculate time per day due to insufficient working days remaining</p>", unsafe_allow_html=True)
 
 
             
