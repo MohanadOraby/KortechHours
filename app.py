@@ -136,7 +136,7 @@ if uploaded_file is not None:
                 hours_fulfilled = int(hours_and_minutes_fulfilled // 3600)
                 minutes_fulfilled = int((hours_and_minutes_fulfilled % 3600) // 60)
                 # Display extra time fulfilled per day
-                st.write(f"**Time** _you can reduce per day for the next {results['days_until_15th']} working days_ **(until the 15th)** and still meet goal")
+                st.markdown(f"<p style='text-align: center; font-size: 16px;'>Time <strong>you can reduce per day for the next {results['days_until_15th']} working days</strong> (until the 15th) and still meet goal:</p>", unsafe_allow_html=True)
                 st.markdown(f"<p style='text-align: center; font-size: 16px;'>{hours_fulfilled:02} hours and {minutes_fulfilled:02} minutes</p>", unsafe_allow_html=True)
 
               
