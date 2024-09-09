@@ -123,14 +123,14 @@ if uploaded_file is not None:
             # Display "FULFILLED" in green
             st.markdown("<h1 style='text-align: center; color: green;'>FULFILLED</h1>", unsafe_allow_html=True)
           
-            hours_fulfilled = int(results['total_hours_worked']-results['total_hours_required'])
-            minutes_fulfilled = int(((results['total_hours_worked']-results['total_hours_required']) - hours_fulfilled ) * 60)
+            hours_completed = int(results['total_hours_worked']-results['total_hours_required'])
+            minutes_completed = int(((results['total_hours_worked']-results['total_hours_required']) - hours_completed ) * 60)
           
             if results["days_until_15th"] > 0:
               
-                hours_and_minutes_fulfilled = (hours_fulfilled*3600 + minutes_fulfilled*60 ) / results["days_until_15th"]
-                hours_fulfilled = hours_and_minutes_fulfilled // 3600
-                minutes_fulfilled = (hours_and_minutes_fulfilled % 3600) // 60
+                hours_and_minutes_fulfilled = (hours_completed*3600 + minutes_completed*60 ) / results["days_until_15th"]
+                hours_fulfilled = int(hours_and_minutes_fulfilled // 3600)
+                minutes_fulfilled = int((hours_and_minutes_fulfilled % 3600) // 60)
                 st.write(f"***Extra time fulfilled per day:*** {hours_fulfilled:02}:{minutes_fulfilled:02}")
               
             else:
