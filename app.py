@@ -164,8 +164,8 @@ if uploaded_file is not None:
             if results["days_until_15th"] > 0:
               
                 hours_and_minutes_to_complete = (hours_needed*3600 + minutes_needed*60 ) / results["days_until_15th"]
-                hours_to_complete = hours_and_minutes_to_complete // 3600
-                minutes_to_complete = (hours_and_minutes_to_complete % 3600) // 60
+                hours_to_complete = int(hours_and_minutes_to_complete // 3600)
+                minutes_to_complete = int((hours_and_minutes_to_complete % 3600) // 60)
                 st.write(f"***Time required per day to fulfill goal:*** {hours_to_complete:02}:{minutes_to_complete:02}")
               
             else:
