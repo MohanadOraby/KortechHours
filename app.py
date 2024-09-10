@@ -22,8 +22,8 @@ def preprocess_file_calculation(file_path):
   total_seconds = df['Hours worked'].sum().total_seconds()
   WHours = int(total_seconds // (60*60))
   WMinutes = int(total_seconds % (60*60) // 60)
-  RHours = int(df.shape[0]*8.0)
-  RMinutes = int((df.shape[0]*8.0*60 ) % 60)
+  RHours = int(df.shape[0]*hours_per_day)
+  RMinutes = int((df.shape[0]*hours_per_day*60 ) % 60)
   days_worked = df.shape[0]
   # df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
   last_date = pd.to_datetime(df['Date']).iloc[-1]
@@ -99,6 +99,9 @@ st.markdown("<h1 style='text-align: center;'>KORTECH Work Hours Tracker</h1>", u
 
 # Adding a prompt for users to upload the Excel file
 st.markdown("<h3 style='text-align: center; color: cyan;'>PLEASE MAKE SURE ALL 'IN' AND 'OUT' COLUMNS ARE FILLED WITH VALUES FOR ACCURATE RESULTS</h3>", unsafe_allow_html=True)
+
+# Add a dropdown for the user to choose hours per day (8.5 as default)
+hours_per_day = st.selectbox("Choose the number of required working hours per day:", [8.0, 8.5], index=1)
 
 # File uploader prompt
 uploaded_file = st.file_uploader("Upload KORTECH Excel file", type=["xlsx"])
