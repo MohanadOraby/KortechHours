@@ -22,8 +22,8 @@ def preprocess_file_calculation(file_path):
   total_seconds = df['Hours worked'].sum().total_seconds()
   WHours = int(total_seconds // (60*60))
   WMinutes = int(total_seconds % (60*60) // 60)
-  RHours = int(df.shape[0]*8.5)
-  RMinutes = int((df.shape[0]*8.5*60 ) % 60)
+  RHours = int(df.shape[0]*8.0)
+  RMinutes = int((df.shape[0]*8.0*60 ) % 60)
   days_worked = df.shape[0]
   # df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
   last_date = pd.to_datetime(df['Date']).iloc[-1]
