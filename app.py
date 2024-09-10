@@ -101,8 +101,41 @@ st.markdown("<h1 style='text-align: center;'>KORTECH Work Hours Tracker</h1>", u
 st.markdown("<h3 style='text-align: center; color: cyan;'>PLEASE MAKE SURE ALL 'IN' AND 'OUT' COLUMNS ARE FILLED WITH VALUES FOR ACCURATE RESULTS</h3>", unsafe_allow_html=True)
 
 # Add a dropdown for the user to choose hours per day (8.5 as default)
-hours_per_day = st.selectbox("Choose the number of required working hours per day:", [8.0, 8.5], index=1)
+# hours_per_day = st.selectbox("Choose the number of required working hours per day:", [8.0, 8.5], index=1)
 
+# Custom CSS to shrink the selectbox
+st.markdown("""
+    <style>
+    /* Adjust the size of the selectbox */
+    .stSelectbox > div[data-baseweb="select"] {
+        width: 80px; /* Set the width to fit the content */
+        display: inline-block; /* Display inline */
+    }
+
+    /* Adjust the label to be inline with the dropdown */
+    .stSelectbox label {
+        display: inline-block; 
+        padding-right: 10px; /* Space between label and dropdown */
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+# Streamlit App
+st.set_page_config(page_title="Work Hours Tracker", page_icon="🕒")  # Set the page title and icon
+st.title("KORTECH Work Hours Tracker")  # Main title on the app
+
+# Create columns to place the label and dropdown side-by-side
+col1, col2 = st.columns([1, 1])
+
+with col1:
+    st.write("Choose the number of required working hours per day:")
+
+with col2:
+    # Add a dropdown for the user to choose hours per day (8.5 as default)
+    hours_per_day = st.selectbox("", [8.0, 8.5], index=1)
+
+# File uploader prompt
+uploaded_file = st.file_uploader("Choose an Excel file", type=["xlsx"])
 # File uploader prompt
 uploaded_file = st.file_uploader("Upload KORTECH Excel file", type=["xlsx"])
 
