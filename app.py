@@ -135,8 +135,6 @@ with col2:
     hours_per_day = st.selectbox("", [8.0, 8.5], index=1)
 
 # File uploader prompt
-uploaded_file = st.file_uploader("Choose an Excel file", type=["xlsx"])
-# File uploader prompt
 uploaded_file = st.file_uploader("Upload KORTECH Excel file", type=["xlsx"])
 
 if uploaded_file is not None:
